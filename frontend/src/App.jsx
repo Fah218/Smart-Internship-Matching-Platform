@@ -5,6 +5,11 @@ import RoleSelection from './pages/auth/RoleSelection';
 import StudentRegister from './pages/auth/StudentRegister';
 import CompanyRegister from './pages/auth/CompanyRegister';
 import HowItWorks from './pages/home/HowItWorks';
+import StudentMatches from "./pages/StudentMatches";
+import CreateJob from "./pages/company/CreateJob";
+import CompanyMatches from './pages/company/CompanyMatches';
+import StudentDashboard from './pages/student/StudentDashboard';
+
 
 // Placeholder components
 const Login = () => <div className="p-10 text-center text-3xl">Login Page (Coming Soon)</div>;
@@ -25,6 +30,12 @@ function App() {
 
           {/* Catch all - redirect to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/student/dashboard" element={<StudentDashboard />} />
+          <Route path="/student/matches" element={<StudentMatches />} />
+          <Route path="/company/create-job" element={<CreateJob />} />
+          <Route path="/company/matches" element={<CompanyMatches />} />
+
+
         </Route>
       </Routes>
     </BrowserRouter>

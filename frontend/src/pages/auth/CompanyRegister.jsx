@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Building2, ArrowLeft, Mail, Lock, User, MapPin, Globe } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const CompanyRegister = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         companyName: '',
         email: '',
@@ -18,9 +22,15 @@ const CompanyRegister = () => {
     };
 
     const handleSubmit = (e) => {
+        
         e.preventDefault();
         console.log('Registering company:', formData);
         // TODO: Connect to backend
+        // Save company name temporarily
+        localStorage.setItem("companyName", formData.companyName);
+
+  // Redirect to create job page
+        navigate("/company/create-job");
     };
 
     return (
