@@ -10,10 +10,11 @@ import {
   CheckCircle,
   ArrowRight,
   TrendingUp,
-  Award, // Added Award icon
+  Award,
   Loader,
   Target,
-  Globe
+  Globe,
+  Code
 } from "lucide-react";
 
 const StudentMatches = () => {
