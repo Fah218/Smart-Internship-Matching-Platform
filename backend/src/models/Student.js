@@ -31,6 +31,16 @@ const studentSchema = new mongoose.Schema(
     isFirstTimeApplicant: {
       type: Boolean,
       default: true
+    },
+
+    githubLink: {
+      type: String,
+      default: ""
+    },
+
+    resume: {
+      type: String, // Store file path
+      default: ""
     }
   },
   { timestamps: true }

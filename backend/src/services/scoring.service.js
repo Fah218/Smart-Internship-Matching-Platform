@@ -52,3 +52,13 @@ export const calculateDomainScore = (
 export const calculateFirstTimeBonus = (isFirstTimeApplicant) => {
   return isFirstTimeApplicant ? 5 : 0;
 };
+
+// Resume Score (0 or 20)
+export const calculateResumeScore = (resumePath) => {
+  return resumePath && resumePath.length > 0 ? 20 : 0;
+};
+
+// GitHub Score (0 or 20)
+export const calculateGithubScore = (githubLink) => {
+  return githubLink && githubLink.length > 0 ? 20 : 0;
+};

@@ -41,11 +41,22 @@ const CreateJob = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const companyName = localStorage.getItem("companyName");
+    // Get company data from localStorage
+    const userData = localStorage.getItem("user");
+    let companyName = "Demo Company";
+    let companyEmail = "";
+
+    if (userData) {
+      const user = JSON.parse(userData);
+      companyName = user.companyName || "Demo Company";
+      companyEmail = user.email || "";
+    }
 
     const payload = {
       title: formData.title,
-      company: companyName || "Demo Company",
+      company: companyName, // For backward compatibility
+      companyName: companyName,
+      companyEmail: companyEmail,
       skillsRequired: formData.skills
         .split(",")
         .map(skill => skill.trim())
@@ -56,14 +67,15 @@ const CreateJob = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/jobs", {
+      const res = await fetch("/api/jobs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
 
       if (!res.ok) {
-        throw new Error("Failed to create job");
+        const err = await res.json();
+        throw new Error(err.message || "Failed to create job");
       }
 
       const job = await res.json();
@@ -90,9 +102,7 @@ const CreateJob = () => {
     setLoadingMatches(true);
 
     try {
-      const res = await fetch(
-        `http://localhost:5000/api/jobs/${jobId}/matches`
-      );
+      const res = await fetch(`/api/jobs/${jobId}/matches`);
       const data = await res.json();
       setMatchedStudents(data);
     } catch (err) {

@@ -21,16 +21,47 @@ const CompanyRegister = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
-        
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Registering company:', formData);
-        // TODO: Connect to backend
-        // Save company name temporarily
-        localStorage.setItem("companyName", formData.companyName);
 
-  // Redirect to create job page
-        navigate("/company/create-job");
+        const payload = {
+            companyName: formData.companyName,
+            email: formData.email,
+            password: formData.password, // Include password in payload
+            industry: formData.industry,
+            location: formData.location,
+            website: formData.website,
+            description: formData.description
+        };
+
+        try {
+            const response = await fetch("/api/companies", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.message || "Registration failed");
+            }
+
+            const company = await response.json();
+
+            // Save company data temporarily
+            localStorage.setItem("companyId", company._id);
+            localStorage.setItem("companyName", company.companyName);
+
+            // Show success message
+            alert(`Company account created successfully! Please login to continue.`);
+
+            // Redirect to login page
+            navigate("/login");
+        } catch (error) {
+            alert(error.message);
+        }
     };
 
     return (

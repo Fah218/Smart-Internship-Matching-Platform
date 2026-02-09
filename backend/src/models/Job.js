@@ -12,6 +12,16 @@ const jobSchema = new mongoose.Schema(
       required: true
     },
 
+    companyName: {
+      type: String,
+      default: function () { return this.company; }
+    },
+
+    companyEmail: {
+      type: String,
+      default: ""
+    },
+
     skillsRequired: {
       type: [String],
       required: true

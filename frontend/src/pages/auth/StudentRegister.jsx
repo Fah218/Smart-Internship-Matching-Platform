@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { GraduationCap, ArrowLeft, Mail, Lock, User, MapPin, Briefcase } from 'lucide-react';
+import { GraduationCap, ArrowLeft, Mail, Lock, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
 
 const StudentRegister = () => {
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
-        password: '',
-        
+        password: ''
     });
 
     const navigate = useNavigate();
-
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,21 +21,17 @@ const StudentRegister = () => {
 
         const payload = {
             name: formData.fullName,
-            email: formData.email,
-            
+            email: formData.email
         };
 
         try {
-            const response = await fetch(
-                "http://localhost:5000/api/students",
-                {
-                    method: "POST",
-                    headers: {
+            const response = await fetch("/api/students", {
+                method: "POST",
+                headers: {
                     "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload)
-                }
-            );
+                },
+                body: JSON.stringify(payload)
+            });
 
             if (!response.ok) {
                 const err = await response.json();
@@ -47,11 +40,14 @@ const StudentRegister = () => {
 
             const student = await response.json();
 
-        // Save student id
+            // Save student id for later use
             localStorage.setItem("studentId", student._id);
 
-        // Temporary redirect (we’ll build this page next)
-            navigate("/student/dashboard");
+            // Show success message
+            alert(`Account created successfully! Please login to continue.`);
+
+            // Redirect to login page
+            navigate("/login");
 
         } catch (error) {
             alert(error.message);
@@ -122,15 +118,6 @@ const StudentRegister = () => {
                                 />
                             </div>
                         </div>
-
-                        
-
-                        <div className="grid grid-cols-2 gap-4">
-                            
-                            
-                        </div>
-
-                        
                     </div>
 
                     <button
