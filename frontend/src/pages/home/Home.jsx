@@ -41,7 +41,7 @@ const Home = () => {
             {/* Features Grid */}
             <section className="max-w-7xl mx-auto px-4">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose InternMatch?</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose SkillBridge AI?</h2>
                     <p className="text-gray-600 max-w-2xl mx-auto">We use advanced technology to simplify the recruitment process</p>
                 </div>
                 <div className="grid md:grid-cols-3 gap-8">
@@ -220,7 +220,7 @@ const Home = () => {
                 <div className="max-w-4xl mx-auto px-4">
                     <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Launch Your Career?</h2>
                     <p className="text-primary-100 mb-8 text-lg max-w-2xl mx-auto">
-                        Don't let opportunities pass you by. Join InternMatch today and find your perfect fit.
+                        Don't let opportunities pass you by. Join SkillBridge AI today and find your perfect fit.
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <Link to="/register/student" className="bg-white text-primary-600 px-8 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-lg">

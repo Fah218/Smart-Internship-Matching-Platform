@@ -1,4 +1,4 @@
-# 🚀 Smart Internship Matching Platform
+# 🚀 SkillBridge AI - Smart Internship Matching Platform
 
 An AI-powered platform that connects students with their perfect internship opportunities using intelligent matching algorithms. Built with React, Node.js, Express, and MongoDB.
 

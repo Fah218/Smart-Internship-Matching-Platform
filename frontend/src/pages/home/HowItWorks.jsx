@@ -44,7 +44,7 @@ const HowItWorks = () => {
             {/* Header Section */}
             <section className="pt-16 pb-12 text-center px-4">
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                    How <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-600">InternMatch</span> Works
+                    How <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-600">SkillBridge AI</span> Works
                 </h1>
                 <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                     We've reimagined the internship search process. Instead of applying to black holes, let our technology find the perfect match for you.

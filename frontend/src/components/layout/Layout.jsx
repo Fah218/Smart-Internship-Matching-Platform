@@ -15,8 +15,8 @@ const Layout = () => {
         <Link
             to={to}
             className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${isActive(to)
-                    ? 'bg-primary-50 text-primary-600 font-medium'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                ? 'bg-primary-50 text-primary-600 font-medium'
+                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`}
         >
             <Icon size={18} />
@@ -37,7 +37,7 @@ const Layout = () => {
                                     <Briefcase className="text-white h-5 w-5" />
                                 </div>
                                 <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-600">
-                                    InternMatch
+                                    SkillBridge AI
                                 </span>
                             </Link>
                         </div>
@@ -109,7 +109,7 @@ const Layout = () => {
             <footer className="bg-white border-t border-gray-100 mt-auto">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <p className="text-center text-gray-500 text-sm">
-                        © 2026 InternMatch. Connecting talent with opportunity.
+                        © 2026 SkillBridge AI. Connecting talent with opportunity.
                     </p>
                 </div>
             </footer>
