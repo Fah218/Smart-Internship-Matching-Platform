@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Building2, ArrowLeft, Mail, Lock, User, MapPin, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { getApiUrl } from '../../config/api';
 
 
 
@@ -35,7 +36,7 @@ const CompanyRegister = () => {
         };
 
         try {
-            const response = await fetch("/api/companies", {
+            const response = await fetch(getApiUrl("/api/companies"), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

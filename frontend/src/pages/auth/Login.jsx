@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Building2, GraduationCap, ArrowRight, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
+import { getApiUrl } from '../../config/api';
 
 const Login = () => {
     const [activeTab, setActiveTab] = useState('student'); // 'student' or 'company'
@@ -28,7 +29,7 @@ const Login = () => {
                 ? '/api/auth/login/student'
                 : '/api/auth/login/company';
 
-            const response = await fetch(endpoint, {
+            const response = await fetch(getApiUrl(endpoint), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

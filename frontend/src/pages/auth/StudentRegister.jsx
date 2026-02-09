@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GraduationCap, ArrowLeft, Mail, Lock, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { getApiUrl } from '../../config/api';
 
 const StudentRegister = () => {
     const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const StudentRegister = () => {
         };
 
         try {
-            const response = await fetch("/api/students", {
+            const response = await fetch(getApiUrl("/api/students"), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
