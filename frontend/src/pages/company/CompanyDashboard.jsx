@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getApiUrl } from '../../config/api';
 import { Building2, Briefcase, Users, TrendingUp } from "lucide-react";
 
 const CompanyDashboard = () => {
@@ -31,7 +32,7 @@ const CompanyDashboard = () => {
             const companyName = user.companyName;
 
             // Fetch all jobs
-            const response = await fetch(`/api/jobs`);
+            const response = await fetch(getApiUrl(`/api/jobs`));
             const allJobs = await response.json();
 
             // Filter jobs by company
@@ -45,7 +46,7 @@ const CompanyDashboard = () => {
             const jobsWithMatches = await Promise.all(
                 companyJobs.map(async (job) => {
                     try {
-                        const matchResponse = await fetch(`/api/jobs/${job._id}/matches`);
+                        const matchResponse = await fetch(getApiUrl(`/api/jobs/${job._id}/matches`));
                         const matches = await matchResponse.json();
                         return { ...job, matches };
                     } catch (err) {

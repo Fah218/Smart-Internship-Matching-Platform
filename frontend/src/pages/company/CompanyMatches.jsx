@@ -372,7 +372,7 @@ const CompanyMatches = () => {
 
                                   {match.resume ? (
                                     <a
-                                      href={`/${match.resume}`}
+                                      href={getApiUrl(`/${match.resume}`)}
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       className="flex-1 flex items-center justify-center px-3 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700 transition-colors shadow-sm"
