@@ -1,15 +1,24 @@
 // API configuration for development and production
+// Hardcoded backend URL for production (temporary fix)
+const PRODUCTION_API_URL = 'https://skillbridge-api-4ueu.onrender.com';
+
 let API_BASE_URL = import.meta.env.VITE_API_URL || '';
+
+// If in production and no env var, use hardcoded URL
+if (import.meta.env.PROD && !API_BASE_URL) {
+    API_BASE_URL = PRODUCTION_API_URL;
+}
 
 // Clean the URL - remove any whitespace or trailing slashes
 if (API_BASE_URL) {
     API_BASE_URL = API_BASE_URL.trim().replace(/\/+$/, '');
 }
 
-// Log the API URL in development
-if (import.meta.env.DEV) {
-    console.log('API Base URL:', API_BASE_URL || 'Using proxy (relative URLs)');
-}
+// Log the API URL
+console.log('🔧 API Configuration:');
+console.log('  Environment:', import.meta.env.MODE);
+console.log('  VITE_API_URL:', import.meta.env.VITE_API_URL || '(not set)');
+console.log('  Final API_BASE_URL:', API_BASE_URL || '(using proxy)');
 
 export const getApiUrl = (path) => {
     // If no base URL, return the path as-is (for proxy)
@@ -21,10 +30,7 @@ export const getApiUrl = (path) => {
     const cleanPath = path.startsWith('/') ? path : `/${path}`;
     const url = `${API_BASE_URL}${cleanPath}`;
 
-    // Log in development
-    if (import.meta.env.DEV) {
-        console.log('API URL:', url);
-    }
+    console.log(`📡 API Call: ${path} → ${url}`);
 
     return url;
 };
