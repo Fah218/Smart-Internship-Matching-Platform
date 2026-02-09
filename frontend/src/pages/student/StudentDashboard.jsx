@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { getApiUrl } from '../../config/api';
 import { useNavigate } from "react-router-dom";
+import { getApiUrl } from '../../config/api';
 import {
+import { getApiUrl } from '../../config/api';
   User,
   MapPin,
   Briefcase,
@@ -46,7 +49,7 @@ const StudentDashboard = () => {
       }
 
       // Fetch student details
-      const res = await fetch(`/api/students/${studentId}`);
+      const res = await fetch(getApiUrl(`/api/students/${studentId}`));
       if (!res.ok) throw new Error("Failed to fetch profile");
       const data = await res.json();
 
@@ -60,7 +63,7 @@ const StudentDashboard = () => {
       });
 
       // Fetch match stats
-      const matchesRes = await fetch(`/api/students/${studentId}/matches`);
+      const matchesRes = await fetch(getApiUrl(`/api/students/${studentId}/matches`));
       if (matchesRes.ok) {
         const matchesData = await matchesRes.json();
         setStats({ matches: matchesData.length });
@@ -117,7 +120,7 @@ const StudentDashboard = () => {
       setResumeFile(null); // Clear selected file after upload
 
       // Refresh matches after profile update
-      const matchesRes = await fetch(`/api/students/${studentId}/matches`);
+      const matchesRes = await fetch(getApiUrl(`/api/students/${studentId}/matches`));
       if (matchesRes.ok) {
         const matchesData = await matchesRes.json();
         setStats({ matches: matchesData.length });

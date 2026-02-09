@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { getApiUrl } from '../../config/api';
 import {
+import { getApiUrl } from '../../config/api';
   Chart as ChartJS,
   BarElement,
   CategoryScale,
@@ -8,6 +10,7 @@ import {
   Legend
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { getApiUrl } from '../../config/api';
 
 // register chart components
 ChartJS.register(
@@ -102,7 +105,7 @@ const CreateJob = () => {
     setLoadingMatches(true);
 
     try {
-      const res = await fetch(`/api/jobs/${jobId}/matches`);
+      const res = await fetch(getApiUrl(`/api/jobs/${jobId}/matches`));
       const data = await res.json();
       setMatchedStudents(data);
     } catch (err) {

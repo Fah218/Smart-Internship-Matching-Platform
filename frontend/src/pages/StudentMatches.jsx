@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { getApiUrl } from '../../config/api';
 import { useNavigate } from "react-router-dom";
+import { getApiUrl } from '../../config/api';
 import {
+import { getApiUrl } from '../../config/api';
   Briefcase,
   MapPin,
   Clock,
@@ -33,11 +36,11 @@ const StudentMatches = () => {
 
     // Fetch matches and applications in parallel
     Promise.all([
-      fetch(`/api/students/${studentId}/matches`).then(res => {
+      fetch(getApiUrl(`/api/students/${studentId}/matches`)).then(res => {
         if (!res.ok) throw new Error("Failed to fetch matches");
         return res.json();
       }),
-      fetch(`/api/applications/student/${studentId}`).then(res => res.json())
+      fetch(getApiUrl(`/api/applications/student/${studentId}`)).then(res => res.json())
     ])
       .then(([matchesData, appsData]) => {
         if (Array.isArray(matchesData)) {
