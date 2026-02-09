@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getApiUrl } from '../../config/api';
 import { useNavigate } from "react-router-dom";
-import { getApiUrl } from '../../config/api';
 import {
-import { getApiUrl } from '../../config/api';
   User,
   MapPin,
   Briefcase,
@@ -25,7 +23,6 @@ const StudentDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [stats, setStats] = useState({ matches: 0 });
-
   const [formData, setFormData] = useState({
     skills: "",
     preferredLocation: "",
@@ -33,13 +30,10 @@ const StudentDashboard = () => {
     bio: "",
     githubLink: ""
   });
-
   const [resumeFile, setResumeFile] = useState(null);
-
   useEffect(() => {
     fetchStudentData();
   }, [navigate]);
-
   const fetchStudentData = async () => {
     try {
       const studentId = localStorage.getItem("studentId");
@@ -47,12 +41,10 @@ const StudentDashboard = () => {
         navigate("/login");
         return;
       }
-
       // Fetch student details
       const res = await fetch(getApiUrl(`/api/students/${studentId}`));
       if (!res.ok) throw new Error("Failed to fetch profile");
       const data = await res.json();
-
       setStudent(data);
       setFormData({
         skills: data.skills ? data.skills.join(", ") : "",
@@ -61,38 +53,26 @@ const StudentDashboard = () => {
         bio: data.bio || "",
         githubLink: data.githubLink || ""
       });
-
       // Fetch match stats
       const matchesRes = await fetch(getApiUrl(`/api/students/${studentId}/matches`));
       if (matchesRes.ok) {
         const matchesData = await matchesRes.json();
         setStats({ matches: matchesData.length });
-      }
-
     } catch (err) {
       console.error(err);
       if (err.message === "Failed to fetch profile") {
-        navigate("/login");
-      }
     } finally {
       setLoading(false);
     }
   };
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
       setResumeFile(e.target.files[0]);
-    }
-  };
-
   const handleSave = async () => {
     setSaving(true);
     const studentId = localStorage.getItem("studentId");
-
     const data = new FormData();
     data.append("skills", formData.skills); // Send as comma-separated string
     data.append("preferredLocation", formData.preferredLocation);
@@ -100,43 +80,22 @@ const StudentDashboard = () => {
     data.append("bio", formData.bio);
     data.append("githubLink", formData.githubLink);
     data.append("isFirstTimeApplicant", "true");
-
     if (resumeFile) {
       data.append("resume", resumeFile);
-    }
-
-    try {
       const res = await fetch(`/api/students/${studentId}`, {
         method: "PUT",
         // No Content-Type header for FormData, browser sets it with boundary
         body: data
-      });
-
       if (!res.ok) throw new Error("Update failed");
-
       const updatedStudent = await res.json();
       setStudent(updatedStudent);
       alert("Profile updated successfully!");
       setResumeFile(null); // Clear selected file after upload
-
       // Refresh matches after profile update
-      const matchesRes = await fetch(getApiUrl(`/api/students/${studentId}/matches`));
-      if (matchesRes.ok) {
-        const matchesData = await matchesRes.json();
-        setStats({ matches: matchesData.length });
-      }
-
-    } catch (err) {
       alert(err.message);
-    } finally {
       setSaving(false);
-    }
-  };
-
   const isProfileComplete = () => {
     return student && student.skills?.length > 0 && student.preferredLocation && student.domain;
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-64px)]">
@@ -147,7 +106,6 @@ const StudentDashboard = () => {
       </div>
     );
   }
-
   return (
     <div className="max-w-6xl mx-auto py-10 px-4">
       {/* Header */}
@@ -161,9 +119,6 @@ const StudentDashboard = () => {
               Welcome, {student?.name}!
             </h1>
             <p className="text-gray-600">{student?.email}</p>
-          </div>
-        </div>
-
         <div className="flex items-center gap-3">
           <button
             onClick={() => {
@@ -183,9 +138,6 @@ const StudentDashboard = () => {
             Find Internships
             {!isProfileComplete() && <Lock size={14} className="ml-2" />}
           </button>
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Stats & Actions */}
         <div className="space-y-6">
@@ -207,14 +159,10 @@ const StudentDashboard = () => {
               <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm opacity-100">
                 <p className="text-sm text-gray-500 mb-1">Matches Found</p>
                 <p className="text-2xl font-bold text-gray-900">{isProfileComplete() ? stats.matches : "-"}</p>
-              </div>
               <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
                 <p className="text-sm text-gray-500 mb-1">Applications</p>
                 <p className="text-2xl font-bold text-gray-900">{isProfileComplete() ? "0" : "-"}</p>
-              </div>
             </div>
-          </div>
-
           {/* Profile Status */}
           <div className={`glass-panel p-6 ${isProfileComplete() ? 'border-green-200 bg-green-50/30' : 'border-yellow-200 bg-yellow-50/30'}`}>
             <div className="flex items-start gap-3">
@@ -228,10 +176,6 @@ const StudentDashboard = () => {
                     ? "Great job! You're all set to be matched with top companies."
                     : "Add your skills, location, and domain to get the best internship matches."}
                 </p>
-              </div>
-            </div>
-          </div>
-
           {/* Links Section Preview */}
           <div className="glass-panel p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Your Links</h3>
@@ -244,19 +188,11 @@ const StudentDashboard = () => {
               ) : (
                 <div className="text-gray-400 text-sm italic">No GitHub link added</div>
               )}
-
               {student?.resume ? (
                 <a href={`/${student.resume}`} target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-700 hover:text-primary-600 transition-colors bg-gray-50 p-3 rounded-lg border border-gray-100">
                   <FileText size={20} className="mr-3" />
                   <span>View Uploaded Resume</span>
-                </a>
-              ) : (
                 <div className="text-gray-400 text-sm italic">No resume uploaded</div>
-              )}
-            </div>
-          </div>
-        </div>
-
         {/* Right Column: Profile Form */}
         <div className="lg:col-span-2">
           <div className="glass-panel p-8">
@@ -265,10 +201,7 @@ const StudentDashboard = () => {
               <span className="text-xs font-medium px-2 py-1 bg-gray-100 rounded text-gray-500">
                 Visible to Recruiters
               </span>
-            </div>
-
             <div className="space-y-6">
-              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Professional Domain
                 </label>
@@ -281,43 +214,20 @@ const StudentDashboard = () => {
                     placeholder="e.g. Frontend Development, Data Science, Marketing"
                     className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
                   />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Skills & Technologies
-                </label>
-                <div className="relative">
                   <Code className="absolute left-3 top-3 text-gray-400" size={18} />
                   <textarea
                     name="skills"
                     value={formData.skills}
-                    onChange={handleChange}
                     rows="3"
                     placeholder="e.g. React, Python, Figma, SQL (comma separated)"
                     className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all resize-none"
-                  />
-                </div>
                 <p className="text-xs text-gray-500 mt-1">Separate each skill with a comma</p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
                   Preferred Location
-                </label>
-                <div className="relative">
                   <MapPin className="absolute left-3 top-3 text-gray-400" size={18} />
-                  <input
                     name="preferredLocation"
                     value={formData.preferredLocation}
-                    onChange={handleChange}
                     placeholder="e.g. Remote, New York, San Francisco"
-                    className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
-                  />
-                </div>
-              </div>
-
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* GitHub Link */}
                 <div>
@@ -334,21 +244,13 @@ const StudentDashboard = () => {
                       className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
                     />
                   </div>
-                </div>
-
                 {/* Resume Upload */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
                     Resume / CV
-                  </label>
-                  <div className="relative">
-                    <input
                       type="file"
                       id="resume-upload"
                       accept=".pdf,.doc,.docx"
                       onChange={handleFileChange}
                       className="hidden"
-                    />
                     <label
                       htmlFor="resume-upload"
                       className="w-full flex items-center justify-center px-4 py-2.5 border border-dashed border-gray-300 rounded-lg text-gray-600 bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors"
@@ -359,11 +261,7 @@ const StudentDashboard = () => {
                         <><Upload size={18} className="mr-2" /> Upload Resume</>
                       )}
                     </label>
-                  </div>
                   <p className="text-xs text-gray-500 mt-1">PDF or Docx (Max 5MB)</p>
-                </div>
-              </div>
-
               <div className="pt-4 border-t border-gray-100 flex justify-end">
                 <button
                   onClick={handleSave}
@@ -379,13 +277,7 @@ const StudentDashboard = () => {
                     </>
                   )}
                 </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
-
 export default StudentDashboard;
