@@ -1,5 +1,10 @@
 // API configuration for development and production
-const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+let API_BASE_URL = import.meta.env.VITE_API_URL || '';
+
+// Clean the URL - remove any whitespace or trailing slashes
+if (API_BASE_URL) {
+    API_BASE_URL = API_BASE_URL.trim().replace(/\/+$/, '');
+}
 
 // Log the API URL in development
 if (import.meta.env.DEV) {
@@ -7,8 +12,13 @@ if (import.meta.env.DEV) {
 }
 
 export const getApiUrl = (path) => {
-    // Remove leading slash from path if API_BASE_URL is set
-    const cleanPath = API_BASE_URL && path.startsWith('/') ? path : path;
+    // If no base URL, return the path as-is (for proxy)
+    if (!API_BASE_URL) {
+        return path;
+    }
+
+    // Ensure path starts with /
+    const cleanPath = path.startsWith('/') ? path : `/${path}`;
     const url = `${API_BASE_URL}${cleanPath}`;
 
     // Log in development
