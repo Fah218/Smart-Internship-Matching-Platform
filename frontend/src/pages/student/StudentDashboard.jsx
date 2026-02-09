@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getApiUrl } from '../../config/api';
 import {
   User,
   MapPin,
@@ -46,7 +47,7 @@ const StudentDashboard = () => {
       }
 
       // Fetch student details
-      const res = await fetch(`/api/students/${studentId}`);
+      const res = await fetch(getApiUrl(`/api/students/${studentId}`));
       if (!res.ok) throw new Error("Failed to fetch profile");
       const data = await res.json();
 
@@ -60,7 +61,7 @@ const StudentDashboard = () => {
       });
 
       // Fetch match stats
-      const matchesRes = await fetch(`/api/students/${studentId}/matches`);
+      const matchesRes = await fetch(getApiUrl(`/api/students/${studentId}/matches`));
       if (matchesRes.ok) {
         const matchesData = await matchesRes.json();
         setStats({ matches: matchesData.length });
@@ -103,7 +104,7 @@ const StudentDashboard = () => {
     }
 
     try {
-      const res = await fetch(`/api/students/${studentId}`, {
+      const res = await fetch(getApiUrl(`/api/students/${studentId}`), {
         method: "PUT",
         // No Content-Type header for FormData, browser sets it with boundary
         body: data
@@ -117,7 +118,7 @@ const StudentDashboard = () => {
       setResumeFile(null); // Clear selected file after upload
 
       // Refresh matches after profile update
-      const matchesRes = await fetch(`/api/students/${studentId}/matches`);
+      const matchesRes = await fetch(getApiUrl(`/api/students/${studentId}/matches`));
       if (matchesRes.ok) {
         const matchesData = await matchesRes.json();
         setStats({ matches: matchesData.length });

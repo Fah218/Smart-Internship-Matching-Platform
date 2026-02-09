@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getApiUrl } from '../../config/api';
 import {
   Users,
   Briefcase,
@@ -8,12 +9,9 @@ import {
   TrendingUp,
   Award,
   Mail,
-  Code,
-  Target,
-  ChevronDown,
-  ChevronUp,
   Github,
-  FileText
+  FileText,
+  Loader
 } from "lucide-react";
 
 const CompanyMatches = () => {
@@ -41,7 +39,7 @@ const CompanyMatches = () => {
 
       // Fetch all jobs first, then filter on frontend
       // This handles both old jobs (with only company field) and new jobs (with companyEmail)
-      const response = await fetch(`/api/jobs`);
+      const response = await fetch(getApiUrl(`/api/jobs`));
       const allJobs = await response.json();
 
       // Filter jobs by company email or company name
@@ -55,7 +53,7 @@ const CompanyMatches = () => {
       const jobsWithMatches = await Promise.all(
         companyJobs.map(async (job) => {
           try {
-            const matchResponse = await fetch(`/api/jobs/${job._id}/matches`);
+            const matchResponse = await fetch(getApiUrl(`/api/jobs/${job._id}/matches`));
             const matches = await matchResponse.json();
             return { ...job, matches };
           } catch (err) {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getApiUrl } from '../config/api';
 import {
   Briefcase,
   MapPin,
@@ -9,9 +10,8 @@ import {
   CheckCircle,
   ArrowRight,
   TrendingUp,
-  AlertCircle,
+  Award, // Added Award icon
   Loader,
-  Code,
   Target,
   Globe
 } from "lucide-react";
@@ -33,11 +33,11 @@ const StudentMatches = () => {
 
     // Fetch matches and applications in parallel
     Promise.all([
-      fetch(`/api/students/${studentId}/matches`).then(res => {
+      fetch(getApiUrl(`/api/students/${studentId}/matches`)).then(res => {
         if (!res.ok) throw new Error("Failed to fetch matches");
         return res.json();
       }),
-      fetch(`/api/applications/student/${studentId}`).then(res => res.json())
+      fetch(getApiUrl(`/api/applications/student/${studentId}`)).then(res => res.json())
     ])
       .then(([matchesData, appsData]) => {
         if (Array.isArray(matchesData)) {
@@ -66,7 +66,7 @@ const StudentMatches = () => {
 
     setApplying(jobId);
     try {
-      const res = await fetch("/api/applications", {
+      const res = await fetch(getApiUrl("/api/applications"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ studentId, jobId })
@@ -205,8 +205,8 @@ const StudentMatches = () => {
                       onClick={() => handleApply(match.jobId)}
                       disabled={isApplied || applying === match.jobId}
                       className={`hidden lg:flex items-center gap-2 px-6 py-2.5 rounded-lg transition-colors font-medium text-sm ${isApplied
-                          ? "bg-green-100 text-green-700 cursor-default"
-                          : "bg-gray-900 text-white hover:bg-gray-800"
+                        ? "bg-green-100 text-green-700 cursor-default"
+                        : "bg-gray-900 text-white hover:bg-gray-800"
                         } ${applying === match.jobId ? "opacity-70 cursor-wait" : ""}`}
                     >
                       {isApplied ? (
@@ -324,8 +324,8 @@ const StudentMatches = () => {
                       onClick={() => handleApply(match.jobId)}
                       disabled={isApplied || applying === match.jobId}
                       className={`mt-5 w-full lg:hidden flex items-center justify-center gap-2 px-6 py-3 rounded-lg transition-colors font-medium text-sm ${isApplied
-                          ? "bg-green-100 text-green-700 cursor-default"
-                          : "bg-gray-900 text-white hover:bg-gray-800"
+                        ? "bg-green-100 text-green-700 cursor-default"
+                        : "bg-gray-900 text-white hover:bg-gray-800"
                         } ${applying === match.jobId ? "opacity-70 cursor-wait" : ""}`}
                     >
                       {isApplied ? (
