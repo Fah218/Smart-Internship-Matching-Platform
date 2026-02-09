@@ -12,7 +12,10 @@ import {
   Github,
   FileText,
   Loader,
-  Code
+  Code,
+  Target,
+  ChevronUp,
+  ChevronDown
 } from "lucide-react";
 
 const CompanyMatches = () => {
