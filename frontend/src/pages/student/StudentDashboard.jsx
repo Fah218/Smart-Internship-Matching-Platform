@@ -243,7 +243,7 @@ const StudentDashboard = () => {
                 <div className="text-gray-400 text-sm italic">No GitHub link added</div>
               )}
 
-              {student?.resume ? (
+              {student?.resume && student.resume.trim() !== "" ? (
                 <a href={getApiUrl(`/${student.resume}`)} target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-700 hover:text-primary-600 transition-colors bg-gray-50 p-3 rounded-lg border border-gray-100">
                   <FileText size={20} className="mr-3" />
                   <span>View Uploaded Resume</span>

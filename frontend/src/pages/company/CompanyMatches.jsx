@@ -370,7 +370,7 @@ const CompanyMatches = () => {
                                     </span>
                                   )}
 
-                                  {match.resume ? (
+                                  {match.resume && match.resume.trim() !== "" ? (
                                     <a
                                       href={getApiUrl(`/${match.resume}`)}
                                       target="_blank"
